@@ -69,19 +69,20 @@ withCategory(Category.PLAYER, ({ hack, toggle }) => {
         for (let i = 0; i < Math.min(99, value); i++) { _.instance.prodigy.giftBoxController.receiveGiftBox(null, _.gameData.giftBox.find((x: any) => x.ID === 1)) }
         success(`You now have ${value} conjure cubes.`)
     }, true)
-    // toggle("Toggle Membership", (hack, player, gameData, toggled) => {
-    //     getMembership(toggled) // TODO: If on extension, use _ method.
-    //     success(`You are ${toggled ? "now a member" : "no longer a member"}.`)
-    // }, (hack, player) => player.hasMembership())
-    // toggle("Toggle Ultimate Membership", async (hack, player, gameData, toggled, setToggled) => {
-    //     if (!player.hasMembership() && toggled) {
-    //         setToggled(false)
-    //         error("You need to toggle regular membership before toggling ultimate membership.")
-    //         return
-    //     }
-    //     getLegacyMembership(toggled) // TODO: If on extension, use _ method.
-    //     success(`You are ${toggled ? "now an ultimate member" : "no longer an ultimate member"}.`)
-    // }, (hack, player) => player.hasLegacyMembership())
+     toggle("Toggle Membership", (hack, player, gameData, toggled) => {
+         getMembership(toggled) // TODO: If on extension, use _ method.
+         success(`You are ${toggled ? "now a member" : "no longer a member"}.`)
+     }, (hack, player) => player.hasMembership())
+     toggle("Toggle Ultimate Membership", async (hack, player, gameData, toggled, setToggled) => {
+         if (!player.hasMembership() && toggled) {
+             setToggled(false)
+             error("You need to toggle regular membership before toggling ultimate membership.")
+             return
+         }
+         getLegacyMembership(toggled) // TODO: If on extension, use _ method.
+         success(`You are ${toggled ? "now an ultimate member" : "no longer an ultimate member"}.`)
+    
+     }, (hack, player) => player.hasLegacyMembership())
     hack("Set Wins", "Set's the amount of wins you have currently.", async (hack, player) => {
         const value = await InputTypes.integer("Please enter the amount of wins you want to get.", 0, 9999999)
         player.data.win = value
